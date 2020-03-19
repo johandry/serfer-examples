@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  leader: 
+    image: surfer
+    container_name: surfer_leader
+    hostname: surfer_leader
+    domainname: docker.local
+    ports:
+      - 7373
+      - 7946
+
+  node:
+    depends_on:
+      - leader
+    image: surfer
+    domainname: docker.local
+    ports:
+      - 7373
+      - 7946
+    command: --join surfer_leader:7946

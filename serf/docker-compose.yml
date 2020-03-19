@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  leader: 
+    image: serf
+    build: .
+    container_name: serf_leader
+    hostname: serf_leader
+    domainname: docker.local
+    volumes:
+      - ./data:/data
+    restart: always
+    ports:
+      - 7373
+      - 7946
+
+  node:
+    depends_on:
+      - leader
+    image: serf
+    build: .
+    domainname: docker.local
+    volumes:
+      - ./data:/data
+    ports:
+      - 7373
+      - 7946
